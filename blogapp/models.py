@@ -10,5 +10,6 @@ class Article(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     likes = models.PositiveIntegerField(default=0)
 
-    def _str_(self):
+    def __str__(self):
         return self.title
+    
