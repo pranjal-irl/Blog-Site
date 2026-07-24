@@ -1,0 +1,14 @@
+<DOCTYPE html>
+<html>
+<head>
+    title{{ article.title }}</title>
+</head>
+<body>
+    <h1>{{ article.title }}</h1>
+    <p>Published: {{ article.created_at }}</p>
+    <p>Likes: {{ article.likes }}</p>
+    <div>{{ article.content }}</div>
+    <br>
+    <a href="{% url 'home' %}">← Back to Home</a>
+</body>
+</html>
