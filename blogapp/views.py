@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseForbidden
 from .models import Article, Comment
 
 # Create your views here.
@@ -9,7 +9,15 @@ def home(request):
 
 def article_detail(request, slug):
     article = get_object_or_404(Article, slug=slug)
-    return render(request, 'blogapp/article_detail.html', {'article': article})
+
+    my_comments = request.session.get('my_comments', [])
+
+    context = {
+        'article' : article,
+        'my_comments' : my_comments,
+    }
+
+    return render(request, 'blogapp/article_detail.html', context)
 
 def like_article(request, slug):
     article = get_object_or_404(Article, slug=slug)
@@ -41,11 +49,45 @@ def like_article(request, slug):
 
 def add_comment(request, slug):
     article = get_object_or_404(Article, slug=slug)
-
-    if request.method=="POST":
+    
+    if request.method == 'POST':
         name = request.POST.get('name')
         body = request.POST.get('body')
+        
+        if name and body:
+            comment = Comment.objects.create(article=article, name=name, body=body)
 
-        Comment.objects.create(article=article, name=name, body=body)
+            my_comments = request.session.get('my_comments', [])
+            my_comments.append(comment.id)
+            request.session['my_comments'] = my_comments
+            request.session.modified = True
+            
+            article.refresh_from_db()
 
-        return render(request, 'blogapp/comments_partial.html', {'article': article})
+    my_comments = request.session.get('my_comments', [])
+    context = {
+        'article': article,
+        'my_comments': my_comments
+    }
+    return render(request, 'blogapp/comments_partial.html', context)
+
+
+def delete_comment(request, comment_id):
+    my_comments = request.session.get('my_comments', [])
+
+    if comment_id in my_comments:
+        comment = get_object_or_404(Comment, id=comment_id)
+        article = comment.article
+
+        comment.delete()
+
+        my_comments.remove(comment_id)
+        request.session['my_comments'] = my_comments
+
+        context = {
+            'article' : article,
+            'my_comments' : my_comments,
+        }
+
+        return render(request, 'blogapp/comments_partial.html', context)
+    return HttpResponseForbidden("You Cannot Delete This Comment!")

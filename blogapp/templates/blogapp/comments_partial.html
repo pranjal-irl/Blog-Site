@@ -4,6 +4,19 @@
                 <div style="border-bottom: 1px solid #eee; margin-bottom: 10px; padding-bottom: 5px;">
                     <strong>{{ comment.name }}</strong><small style="color: grey;">({{ comment.created_at|date:"d M Y"}})</small>
                     <p>{{ comment.body }}</p>
+
+                    {% if comment.id in my_comments %}
+                        <div style="margin-top: 5px;">
+                            <button style="color: blue; background: none; border: none; cursor: pointer; padding: 0; margin-right: 10px;">Edit</button>
+                            <button hx-post="{% url 'delete_comment' comment.id %}"
+                                    hx-target="#comment-section"
+                                    hx-confirm="Kya aap sach me yeh comment delete karna chahte hain?"
+                                    style="color: red; background: none; border: none; cursor: pointer; padding: 0;">
+                                Delete
+                            </button>
+                        </div>
+                    {% endif %}
+
                 </div>
             {% empty %}
                 <p id="no-comments">There are no comments yet. Be the first one to comment!</p>
@@ -13,7 +26,7 @@
             <hr>
 
             <h4>Add a Comment</h4>
-            <form hx-post="/article/{{ article.slug }}/comment/"
+            <form hx-post="{% url 'add_comment' article.slug %}"
                 hx-target="#comment-section"
                 hx-swap="innerHTML">
                 {% csrf_token %}

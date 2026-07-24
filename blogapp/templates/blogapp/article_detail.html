@@ -12,6 +12,10 @@
     <h1>{{ article.title }}</h1>
     <p>Published: {{ article.created_at }}</p>
 
+    <div style="margin-top: 20px; margin-bottom: 30px; font-size: 1.1em; line-height: 1.6">
+        {{ article.content|linebreaks }}
+    </div>
+
     <div id="like-section">
         <span>Likes: {{ article.likes }}</span>
         <button hx-post="{% url 'like_article' article.slug %}"
@@ -24,7 +28,6 @@
         {% include 'blogapp/comments_partial.html' %}
     </div>
 
-    <div>{{ article.content }}</div>
     <br>
     <a href="{% url 'home' %}">← Back to Home</a>
 </body>

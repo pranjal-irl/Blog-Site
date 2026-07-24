@@ -6,5 +6,5 @@ urlpatterns = [
     path('article/<slug:slug>/', views.article_detail, name='article_detail'),
     path('article/<slug:slug>/like/', views.like_article, name='like_article'),
     path('article/<slug:slug>/comment/', views.add_comment, name='add_comment'),
-
+    path('comment/<int:comment_id>/delete/', views.delete_comment, name='delete_comment'),
 ]
