@@ -1,12 +1,19 @@
-<DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
-    title{{ article.title }}</title>
+    <title>{{ article.title }}</title>
+    <script src="https://unpkg.com/htmx.org"></script>
 </head>
-<body>
+<body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
     <h1>{{ article.title }}</h1>
     <p>Published: {{ article.created_at }}</p>
-    <p>Likes: {{ article.likes }}</p>
+    <div id="like-section">
+        <span>Likes: {{ article.likes }}</span>
+        <button hx-post="{% url 'like_article' article.slug %}"
+                hx-target="#like-section">
+            Like
+        </button>
+    </div>
     <div>{{ article.content }}</div>
     <br>
     <a href="{% url 'home' %}">← Back to Home</a>
