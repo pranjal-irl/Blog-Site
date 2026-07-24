@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
-from .models import Article
+from .models import Article, Comment
 
 # Create your views here.
 def home(request):
@@ -37,3 +37,15 @@ def like_article(request, slug):
         <button hx-post="/article/{article.slug}/like/" hx-target="#like-section">{button_text}</button>
         """
         return HttpResponse(context)
+
+
+def add_comment(request, slug):
+    article = get_object_or_404(Article, slug=slug)
+
+    if request.method=="POST":
+        name = request.POST.get('name')
+        body = request.POST.get('body')
+
+        Comment.objects.create(article=article, name=name, body=body)
+
+        return render(request, 'blogapp/comments_partial.html', {'article': article})

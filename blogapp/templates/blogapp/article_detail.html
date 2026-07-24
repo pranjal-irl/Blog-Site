@@ -1,12 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head>
+
     <title>{{ article.title }}</title>
     <script src="https://unpkg.com/htmx.org"></script>
+
 </head>
+
 <body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
+
     <h1>{{ article.title }}</h1>
     <p>Published: {{ article.created_at }}</p>
+
     <div id="like-section">
         <span>Likes: {{ article.likes }}</span>
         <button hx-post="{% url 'like_article' article.slug %}"
@@ -14,6 +19,11 @@
             Like
         </button>
     </div>
+
+    <div id="comment-section">
+        {% include 'blogapp/comments_partial.html' %}
+    </div>
+
     <div>{{ article.content }}</div>
     <br>
     <a href="{% url 'home' %}">← Back to Home</a>
