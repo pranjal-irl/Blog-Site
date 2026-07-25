@@ -91,3 +91,23 @@ def delete_comment(request, comment_id):
 
         return render(request, 'blogapp/comments_partial.html', context)
     return HttpResponseForbidden("You Cannot Delete This Comment!")
+
+
+def edit_comment(request, comment_id):
+    my_comments = request.session.get('my_comments', [])
+
+    if comment_id not in my_comments:
+        return HttpResponseForbidden("You Cannot Edit This Comment!")
+
+    comment = get_object_or_404(Comment, id=comment_id)
+
+    if request.method=='POST':
+        new_body = request.POST.get('body')
+        if new_body:
+            comment.body = new_body
+            comment.save()
+
+        context = {'comment': comment, 'my_comments': my_comments}
+        return render(request, 'blogapp/single_comment_partial.html', context)
+
+    return render(request, 'blogapp/comment_edit_partial.html', {'comment': comment})

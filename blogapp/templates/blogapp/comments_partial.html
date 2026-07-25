@@ -1,16 +1,20 @@
 <h3>Comments</h3>
         <div id="comments-list">
             {% for comment in article.comments.all %}
-                <div style="border-bottom: 1px solid #eee; margin-bottom: 10px; padding-bottom: 5px;">
-                    <strong>{{ comment.name }}</strong><small style="color: grey;">({{ comment.created_at|date:"d M Y"}})</small>
+
+                <div id="comment-div-{{ comment.id }}" style="border-bottom: 1px solid #eee; margin-bottom: 10px; padding-bottom: 5px;">
+                    <strong>{{ comment.name }}</strong> <small style="color: grey;">({{ comment.created_at|date:"d M Y" }})</small>
                     <p>{{ comment.body }}</p>
 
                     {% if comment.id in my_comments %}
                         <div style="margin-top: 5px;">
-                            <button style="color: blue; background: none; border: none; cursor: pointer; padding: 0; margin-right: 10px;">Edit</button>
+                            <button hx-get = "{% url 'edit_comment' comment.id %}""
+                                    hx-target = "#comment-div-{{ comment.id }}"
+                                    hx-swap = innerHTML
+                                    style="color: blue; background: none; border: none; cursor: pointer; padding: 0; margin-right: 10px;">Edit</button>
                             <button hx-post="{% url 'delete_comment' comment.id %}"
                                     hx-target="#comment-section"
-                                    hx-confirm="Kya aap sach me yeh comment delete karna chahte hain?"
+                                    hx-confirm="Delete your comment?"
                                     style="color: red; background: none; border: none; cursor: pointer; padding: 0;">
                                 Delete
                             </button>

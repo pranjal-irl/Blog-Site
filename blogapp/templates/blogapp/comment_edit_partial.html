@@ -1,0 +1,9 @@
+<form hx-post="{% url 'edit_comment' comment.id %}" hx-target="#comment-div-{{ comment.id }}" hx-swap="outerHTML">
+    {% csrf_token %}
+    <strong>{{ comment.name }}</strong> <small style="color: grey;">(Editing...)</small>
+    <div style="margin-top: 5px;">
+        <textarea name="body" required_style="width: 100%; height: 60px; margin-bottom: 5px;">{{ comment.body }}</textarea>
+    </div>
+    <button type="submit" style="background: green; color: white; border: none; padding: 5px 10px; cursor: pointer;">Save</button>
+    <button hx-get="{% url 'article_detail' comment.article.slug %}" hx-target="#comment-section" style="background: gray; color: white; border: none; padding: 5px 10px; cursor: pointer; margin-left: 5px;">Cancel</button>
+</form>
