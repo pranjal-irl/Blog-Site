@@ -1,0 +1,92 @@
+html{
+    font-size: 1.3vw;
+}
+
+@media (max-width: 48rem) {
+    html{
+    font-size: 4.2vw;
+    }
+}
+
+.modal-overlay{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+.modal-box{
+    background: #ffffff;
+    width: 80vw;
+    max-width: 30rem;
+    padding: 2rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+.modal-box form p {
+    margin-bottom: 0.8rem;
+    text-align: left;
+}
+
+.modal-box input[type="text"],
+.modal-box input[type="email"],
+.modal-box input[type="password"] {
+    width: 100%;
+    padding: 0.5rem;
+    font-size: 0.95rem;
+    border: 0.05rem solid #ccc;
+    border-radius: 0.3rem;
+    box-sizing: border-box;
+}
+
+.fluid-btn {
+    width: 100%;
+    padding: 0.7rem;
+    font-size: 1rem;
+    border: none;
+    border-radius: 0.3rem;
+    cursor: pointer;
+    margin-top: 0.5rem;
+}
+
+.top-guest-nudge{
+    position: absolute;
+    top: 3vh;
+    right: 3vh;
+    font-size: 0.9rem;
+    background: #f3f4f6;
+    padding: 0.5rem 1rem;
+    border: 0.05rem solid #d1d5db;
+    border-radius: 1.5rem;
+}
+
+.bottom-notify-widget{
+    position: fixed;
+    bottom: 4vh;
+    right: 4vw;
+    z-index: 90;
+}
+
+.bottom-notify-widget .fluid-btn{
+    width: auto;
+    border-radius: 2rem;
+    padding: 0.6rem 1.2rem;
+}
+
+.subscribed-text{
+    color: #059669;
+    font-weight: bold;
+    font-size: 0.95rem;
+    background: #ecfdf5;
+    padding: 0.6rem, 1.2rem;
+    border-radius: 2rem;
+    border: 0.05rem solid #a7f3d0;
+}
