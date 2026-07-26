@@ -10,4 +10,8 @@ urlpatterns = [
     path('comment/<int:comment_id>/edit/', views.edit_comment, name='edit_comment'),
     path('login/', views.login_view, name='login'),
     path('signup', views.signup_view, name='signup'),
+    path('continue_guest/', views.continue_as_guest, name='continue_guest'),
+    path('htmx/login-form/', views.htmx_login_form, name='htmx_login_form'),
+    path('htmx/singup-form/', views.htmx_signup_form, name='htmx_signup_form'),
+    path('subscribe-notify/', views.subscribe_notification, name='subscribe_notify'),
 ]

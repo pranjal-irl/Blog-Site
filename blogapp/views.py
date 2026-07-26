@@ -161,3 +161,58 @@ def signup_view(request):
     return render(request, 'blogapp/signup.html', {'form': form})
 
 
+def all_articles_view(request):
+    show_welcome_popup = not request.user.is_authenticated and not request.session.get('guest_accepted', False)
+    return render(request, 'blogapp/all_articles.html', {'show_welcome_popup': show_welcome_popup})
+
+def continue_as_guest(request):
+    request.session['guest_accepted'] = True
+    request.session.modified = True
+    return HttpResponse("")
+
+def signup_view(request):
+    if request.method =='POST':
+        form = ExtendedSignupForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+
+            session_comments = request.session.get('my_comments', [])
+            if session_comments:
+                Comment.objects.filter(id__in=session_comments).update(user=user)
+                del request.ssession['my_comments']
+                request.session.modified = True
+
+            auth_login(request, user)
+            return redirect('/')
+    return redirect('/')
+
+def login_view(request):
+    if request.method == 'POST':
+        form = AuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            user = form.get_user()
+
+            session_comments = request.session.get('my_comments', [])
+            if session_comments:
+                Comment.objects.filter(id__in=session_comments).update(user=user)
+                del request.session['my_comments']
+                request.session.modified = True
+
+            auth_login(request, user)
+            return redirect('/')
+    return redirect('/')
+
+def htmx_login_form(request):
+    form = AuthenticationForm()
+    return render(request, 'blogapp/partials/login_form_inner.html', {'form': form})
+
+def htmx_signup_form(request):
+    form = ExtendedSignupForm()
+    return render(request, 'blogapp/partials/signup_form_inner.html', {'form': form})
+
+@login_required
+def subscribe_notification(request):
+    profile = request.user.profile
+    profile.get_notified = True
+    profile.save()
+    return HttpResponse('<span class="subscribed-text">You stay notified about new posts via email</span>')
