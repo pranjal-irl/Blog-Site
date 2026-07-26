@@ -2,21 +2,24 @@
 
 {% block content %}
 
-{% if not request.user.is_authenticated %}
-<div class="top-guest-nudge">
-    <span>Wanna change you past comments or likes? </span>
-    <a  href="#" style="color: #2563eb; font-weight: bold; text-decoration: none;"
-        hx-get="{% url 'htmx_login_form' %}" hx-target="#modal-dynamic-content"
-        onclick="document.getElementById('main-auth-modal').style.display='flex';">Login</a>
-</div>
-{% endif %}
-
-<main style="padding 6vh 8vw;">
+<main style="padding: 6vh 8vw;">
     <h1 style="font-size: 2.2rem; margin-bottom: 1rem; color: #111827">All Blog Articles</h1>
     <p style="font-size: 1.1rem; color: #4b5563; line-height: 1.6;">
         Welcome to my Blog! (starting on July 24,2026 when I am 18)
     </p>
 
+    <div class="articles-list" style="display: flex; flex-direction: column; gap: 1.5rem;">
+        {% for article in articles %}
+            <div class="article-card" style="padding: 1.5rem; border: 1px solid #e5e7eb; border-radius: 8px; background: #fff; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);">
+                <h2 style="font-size: 1.5rem; margin-bottom: 0.5rem;">
+                    <a href="{% url 'article_detail' article.slug %}" style="color: 2563eb; text-decoration: none;">{{ article.title }}</a>
+                </h2>
+                <p style="color: #4b5563; line-height: 1.5;">{{ article.body|truncatewords:40 }}</p>
+            </div>
+        {% empty %}
+            <p style="color: #9ca3af;">No articles written yet.</p>
+        {% endfor %}
+    </div>
 </main>
 
 <div class="bottom-notify-widget" id="footer-notification-zone">
@@ -38,23 +41,4 @@
     {% endif %}
 </div>
 
-{% if show_welcome_popup %}
-<div id="main-auth-modal" class="modal-overlay">
-    <div class="modal-box" id="modal-dynamic-content">
-        <h2 style="font-size: 1.6rem; margin-bottom: 1rem; color: #1f2937;">Welcome to the Blog</h2>
-        <p style="color: #6b7280; margin-bottom: 1.5rem; font-size: 0.95rem;">You can login to sync your comments & likes And to Join the Community!</p>
-
-        <button class="fluid-btn" style="background: #2563eb; color: white;"
-                hx-get="{% url 'htmx_login_form' %}" hx-target="#modal-dynamic-content">Login</button>
-
-        <button class="fluid-btn" style="background: #10b981; color: white;"
-                hx-get="{% url 'htmx_signup_form' %}" hx-target="#modal-dynamic-content">Sign UP</button>
-
-        <button class="fluid-btn" style="background: #ef4444; color: white;"
-                hx-post="{% url 'continue_guest' %}" hx-target="#main-auth-modal" hx-swap="outerHTML">
-            Continue as Guest
-        </button>
-    </div>
-</div>
-{% endif %}
 {% endblock %}

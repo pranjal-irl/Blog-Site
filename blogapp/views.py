@@ -177,3 +177,7 @@ def subscribe_notification(request):
     profile.get_notified = True
     profile.save()
     return HttpResponse('<span class="subscribed-text">You stay notified about new posts via email</span>')
+
+
+def htmx_welcome_form(request):
+    return render(request, 'blogapp/partials/welcome_modal_inner.html')

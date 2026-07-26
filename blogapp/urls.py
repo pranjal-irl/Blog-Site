@@ -14,4 +14,5 @@ urlpatterns = [
     path('htmx/login-form/', views.htmx_login_form, name='htmx_login_form'),
     path('htmx/signup-form/', views.htmx_signup_form, name='htmx_signup_form'),
     path('subscribe-notify/', views.subscribe_notification, name='subscribe_notify'),
+    path('htmx/welcome-form/', views.htmx_welcome_form, name='htmx_welcome_form'),
 ]

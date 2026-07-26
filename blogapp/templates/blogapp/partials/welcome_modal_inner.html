@@ -1,0 +1,14 @@
+<h2 style="font-size: 1.6rem; margin-bottom: 1rem; color: #1f2937;">Welcome to the Blog</h2>
+<p style="color: #6b7280; margin-bottom: 1.5rem; font-size: 0.95rem;">You can login to Join the Community! and sync your comments & likes.</p>
+
+<button class="fluid-btn" style="background: #2563eb; color: white;"
+        hx-get="{% url 'htmx_login_form' %}" hx-target="#modal-dynamic-content">Login</button>
+
+<button class="fluid-btn" style="background: #10b981; color: white;"
+        hx-get="{% url 'htmx_signup_form' %}" hx-target="#modal-dynamic-content">Sign UP</button>
+
+<button class="fluid-btn" style="background: #ef4444; color: white;"
+        hx-get="{% url 'continue_guest' %}" hx-target="#main-auth-modal" hx-swap="none"
+        onclick="localStorage.setItem('guest_session_active', 'true'); document.getElementById('main-auth-modal').style.display='none';">
+    Continue as Guest
+</button>

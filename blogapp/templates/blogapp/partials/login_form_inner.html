@@ -1,10 +1,29 @@
-<h3 style="font-size: 1.3rem; margin-bottom: 1rem;">Login</h3>
-<form method="post" action="{% url 'login' %}">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="fluid-btn" style="background: #2563eb; color: white;">Sign In</button>
-</form>
+<div style="position: relative; width: 100%;">
 
-<p style="font-size: 0.85rem; margin-top: 1rem;">
-    New here? <a href="#" hx-get="{% url 'htmx_signup_form' %}" hx-target="#modal-dynamic-content">Create an account</a>
-</p>
+    {% if request.session.guest_accepted %}
+    <button type="button"
+            style="position: absolute; top: -1.5rem; right: -0.5rem; background: none; border: none; font-size: 1.4rem; font-weight: bold; color: #9ca3af; cursor: pointer;"
+            onclick="localStorage.setItem('guest_session_active', 'true'); document.getElementById('main-auth-modal').style.display='none';">
+        ✕
+    </button>
+    {% endif %}
+
+    {% if not request.session.guest_accepted %}
+    <button hx-get="{% url 'htmx_welcome_form' %}" hx-target="#modal-dynamic-content"
+            style="background: none; border: none; color: #6b7280; cursor: pointer; font-size: 0.9rem; font-weight: 500;">
+        ← Back
+    </button>
+    {% endif %}
+
+    <h3 style="font-size: 1.3rem; margin-bottom: 1rem;">Login</h3>
+    <form method="post" action="{% url 'login' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="fluid-btn" style="background: #2563eb; color: white;">Sign In</button>
+    </form>
+
+    <p style="font-size: 0.85rem; margin-top: 1rem;">
+        New here? <a href="#" hx-get="{% url 'htmx_signup_form' %}" hx-target="#modal-dynamic-content">Create an account</a>
+    </p>
+
+</div>

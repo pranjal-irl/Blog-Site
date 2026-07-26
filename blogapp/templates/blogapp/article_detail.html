@@ -1,34 +1,38 @@
-<!DOCTYPE html>
-<html>
-<head>
+{% extends 'blogapp/base.html' %}
 
-    <title>{{ article.title }}</title>
-    <script src="https://unpkg.com/htmx.org"></script>
+    {% block content %}
+    <div style="padding: 4vh 8vw;">
 
-</head>
+        {% if not request.user.is_authenticated %}
+        <div class="top-guest-nudge" style="background: #eff6ff; padding: 0.8rem 1.2rem; border-radius: 6px; margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: center; border: 1px solid #bfdbfe;">
+            <span style="color: #1e40af; font-size: 0.95rem;">Wanna change your past comments or likes?</span>
+            <a href="#" style="color: #2563eb; font-weight: bold; text-decoration: none;"
+            hx-get="{% url 'htmx_login_form' %}" hx-target="#modal-dynamic-content"
+            onclick="document.getElementById('main-auth-modal').style.display='flex'; return false;">Login</a>
+        </div>
+        {% endif %}
 
-<body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
 
-    <h1>{{ article.title }}</h1>
-    <p>Published: {{ article.created_at }}</p>
+        <h1>{{ article.title }}</h1>
+        <p>Published: {{ article.created_at }}</p>
 
-    <div style="margin-top: 20px; margin-bottom: 30px; font-size: 1.1em; line-height: 1.6">
-        {{ article.content|linebreaks }}
+        <div style="margin-top: 20px; margin-bottom: 30px; font-size: 1.1em; line-height: 1.6">
+            {{ article.content|linebreaks }}
+        </div>
+
+        <div id="like-section">
+            <span>Likes: {{ article.likes }}</span>
+            <button hx-post="{% url 'like_article' article.slug %}"
+                    hx-target="#like-section">
+                Like
+            </button>
+        </div>
+
+        <div id="comment-section">
+            {% include 'blogapp/comments_partial.html' %}
+        </div>
+
+        <br>
+        <a href="{% url 'home' %}">← Back to Home</a>
     </div>
-
-    <div id="like-section">
-        <span>Likes: {{ article.likes }}</span>
-        <button hx-post="{% url 'like_article' article.slug %}"
-                hx-target="#like-section">
-            Like
-        </button>
-    </div>
-
-    <div id="comment-section">
-        {% include 'blogapp/comments_partial.html' %}
-    </div>
-
-    <br>
-    <a href="{% url 'home' %}">← Back to Home</a>
-</body>
-</html>
+{% endblock %}
