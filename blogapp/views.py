@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, HttpResponseForbidden
 from .models import Article, Comment
 from django.contrib.auth import login as auth_login
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from .forms import ExtendedSignupForm
 
@@ -119,7 +119,7 @@ def edit_comment(request, comment_id):
 
 def all_articles_view(request):
     show_welcome_popup = not request.user.is_authenticated and not request.session.get('guest_accepted', False)
-    articles = Article..objects.all()
+    articles = Article.objects.all()
     return render(request, 'blogapp/all_articles.html', {'show_welcome_popup': show_welcome_popup, 'articles': articles})
 
 def continue_as_guest(request):

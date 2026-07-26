@@ -7,7 +7,7 @@
     <span>Wanna change you past comments or likes? </span>
     <a  href="#" style="color: #2563eb; font-weight: bold; text-decoration: none;"
         hx-get="{% url 'htmx_login_form' %}" hx-target="#modal-dynamic-content"
-        onclick="document.getElementById('main_auth_modal').style.display='flex';">Login</a>
+        onclick="document.getElementById('main-auth-modal').style.display='flex';">Login</a>
 </div>
 {% endif %}
 
@@ -23,7 +23,7 @@
     {% if not request.user.is_authenticated %}
         <button class="fluid-btn" style="background: #1f2937; color: white;"
                 hx-get="{% url 'htmx_signup_form' %}" hx-target="#modal-dynamic-content"
-                onclick="document.getElementById('main_auth_modal').style.display='flex';">
+                onclick="document.getElementById('main-auth-modal').style.display='flex';">
             Get notified for new blog posts
         </button>
     {% else %}

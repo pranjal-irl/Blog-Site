@@ -1,6 +1,6 @@
 <h3 style="font-size: 1.3rem; margin-bottom: 1rem;">Login</h3>
 <form method="post" action="{% url 'login' %}">
-    {{% csrf_token %}}
+    {% csrf_token %}
     {{ form.as_p }}
     <button type="submit" class="fluid-btn" style="background: #2563eb; color: white;">Sign In</button>
 </form>
