@@ -117,53 +117,10 @@ def edit_comment(request, comment_id):
     return render(request, 'blogapp/comment_edit_partial.html', {'comment': comment})
 
 
-def login_view(request):
-    if request.method == 'POST':
-        form = AuthenticationForm(request, data=request.POST)
-        
-        if form.is_valid():
-            user = form.get_user()
-
-            session_comments = request.session.get('my_comments', [])
-            
-            if session_comments:
-                Comment.objects.filter(id__in=session_comments).update(user=user)
-
-                del request.session['my_comments']
-                request.session.modified = True
-
-            auth_login(request, user)
-            return redirect('/')
-
-    else:
-        form = AuthenticationForm()
-        
-    return render(request, 'blogapp/login.html', {'form': form})
-
-
-def signup_view(request):
-    if request.metho == 'POST':
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-
-            session_comments = request.session.get('my_comments', [])
-            if session_comments:
-                Comment.objects.filter(id__in=session_comments).update(user=user)
-                del request.session['my_comments']
-                request.session.modified = True
-
-            auth_login(request, user)
-            return redirect('/')
-    else:
-        form= UserCreationForm()
-
-    return render(request, 'blogapp/signup.html', {'form': form})
-
-
 def all_articles_view(request):
     show_welcome_popup = not request.user.is_authenticated and not request.session.get('guest_accepted', False)
-    return render(request, 'blogapp/all_articles.html', {'show_welcome_popup': show_welcome_popup})
+    articles = Article..objects.all()
+    return render(request, 'blogapp/all_articles.html', {'show_welcome_popup': show_welcome_popup, 'articles': articles})
 
 def continue_as_guest(request):
     request.session['guest_accepted'] = True
@@ -179,12 +136,14 @@ def signup_view(request):
             session_comments = request.session.get('my_comments', [])
             if session_comments:
                 Comment.objects.filter(id__in=session_comments).update(user=user)
-                del request.ssession['my_comments']
+                del request.session['my_comments']
                 request.session.modified = True
 
             auth_login(request, user)
             return redirect('/')
-    return redirect('/')
+    else:
+        form = ExtendedSignupForm()
+    return render(request, 'blogapp/signup.html', {'form': form})
 
 def login_view(request):
     if request.method == 'POST':
@@ -200,7 +159,9 @@ def login_view(request):
 
             auth_login(request, user)
             return redirect('/')
-    return redirect('/')
+    else:
+        form = AuthenticationForm()
+    return render(request, 'blogapp/login.html', {'form': form})
 
 def htmx_login_form(request):
     form = AuthenticationForm()
