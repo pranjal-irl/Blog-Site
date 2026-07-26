@@ -1,6 +1,10 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, HttpResponseForbidden
 from .models import Article, Comment
+from django.contrib.auth import login as auth_login
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth.decorators import login_required
+from .forms import ExtendedSignupForm
 
 # Create your views here.
 def home(request):
@@ -111,3 +115,49 @@ def edit_comment(request, comment_id):
         return render(request, 'blogapp/single_comment_partial.html', context)
 
     return render(request, 'blogapp/comment_edit_partial.html', {'comment': comment})
+
+
+def login_view(request):
+    if request.method == 'POST':
+        form = AuthenticationForm(request, data=request.POST)
+        
+        if form.is_valid():
+            user = form.get_user()
+
+            session_comments = request.session.get('my_comments', [])
+            
+            if session_comments:
+                Comment.objects.filter(id__in=session_comments).update(user=user)
+
+                del request.session['my_comments']
+                request.session.modified = True
+
+            auth_login(request, user)
+            return redirect('/')
+
+    else:
+        form = AuthenticationForm()
+        
+    return render(request, 'blogapp/login.html', {'form': form})
+
+
+def signup_view(request):
+    if request.metho == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+
+            session_comments = request.session.get('my_comments', [])
+            if session_comments:
+                Comment.objects.filter(id__in=session_comments).update(user=user)
+                del request.session['my_comments']
+                request.session.modified = True
+
+            auth_login(request, user)
+            return redirect('/')
+    else:
+        form= UserCreationForm()
+
+    return render(request, 'blogapp/signup.html', {'form': form})
+
+

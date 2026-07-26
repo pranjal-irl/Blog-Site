@@ -6,9 +6,9 @@
                     <strong>{{ comment.name }}</strong> <small style="color: grey;">({{ comment.created_at|date:"d M Y" }})</small>
                     <p>{{ comment.body }}</p>
 
-                    {% if comment.id in my_comments %}
+                    {% if comment.id in my_comments or comment.user == request.user %}
                         <div style="margin-top: 5px;">
-                            <button hx-get = "{% url 'edit_comment' comment.id %}""
+                            <button hx-get = "{% url 'edit_comment' comment.id %}"
                                     hx-target = "#comment-div-{{ comment.id }}"
                                     hx-swap = innerHTML
                                     style="color: blue; background: none; border: none; cursor: pointer; padding: 0; margin-right: 10px;">Edit</button>
