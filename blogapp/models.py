@@ -16,6 +16,10 @@ class Article(models.Model):
     def __str__(self):
         return self.title
 
+    def get_absolute_url(self):
+        from django.urls import reverse; return reverse("article_detail", args=[self.id])
+    
+
 
 class Comment(models.Model):
     article = models.ForeignKey(Article, on_delete=models.CASCADE, related_name='comments')
@@ -43,3 +47,11 @@ def create_user_profile(sender, instance, created, **kwargs):
 @receiver(post_save, sender=User)
 def save_user_profile(sender, instance, **kwargs):
     instance.profile.save()
+
+@receiver(post_save, sender=Article)
+def notify_new_article(sender, instance, created, **kwargs):
+    if created:
+        emails=list(Profile.objects.filter(get_notified=True).values_list('user__email', flat=True))
+        from django.core.mail import send_mail; from django.conf import settings
+        body = f"A fresh article is live! Read it here: https://pranjal.ink{instance.get_absolute_url()}"
+        if emails: send_mail(f"New Post : {instance.title}", body, settings.DEFAULT_FROM_EMAIL, emails)
