@@ -10,11 +10,14 @@
 
     <div class="articles-list" style="display: flex; flex-direction: column; gap: 1.5rem;">
         {% for article in articles %}
-            <div class="article-card" style="padding: 1.5rem; border: 1px solid #e5e7eb; border-radius: 8px; background: #fff; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);">
+            <div class="article-card" style="padding: 1.5rem; position: relative; padding-bottom: 2.5rem; border: 1px solid #e5e7eb; border-radius: 8px; background: #fff; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);">
                 <h2 style="font-size: 1.5rem; margin-bottom: 0.5rem;">
-                    <a href="{% url 'article_detail' article.slug %}" style="color: 2563eb; text-decoration: none;">{{ article.title }}</a>
+                    <a href="{% url 'article_detail' article.slug %}" style="color: #2563eb; text-decoration: none;">{{ article.title }}</a>
                 </h2>
                 <p style="color: #4b5563; line-height: 1.5;">{{ article.body|truncatewords:40 }}</p>
+                <div style="position: absolute; boottom: 0.75rem; right: 1.5rem; font-size: 0.85rem; color: #6b7280">
+                    {{ article.created_at|date:"d M Y, h:i A" }}
+                </div>
             </div>
         {% empty %}
             <p style="color: #9ca3af;">No articles written yet.</p>
