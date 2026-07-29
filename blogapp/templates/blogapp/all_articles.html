@@ -2,46 +2,50 @@
 
 {% block content %}
 
-<main style="padding: 6vh 8vw;">
-    <h1 style="font-size: 2.2rem; margin-bottom: 1rem; color: #111827">All Blog Articles</h1>
-    <p style="font-size: 1.1rem; color: #4b5563; line-height: 1.6;">
-        Welcome to my Blog! (starting on July 24,2026 when I am 18)
-    </p>
+<body>
 
-    <div class="articles-list" style="display: flex; flex-direction: column; gap: 1.5rem;">
-        {% for article in articles %}
-            <div class="article-card" style="padding: 1.5rem; position: relative; padding-bottom: 2.5rem; border: 1px solid #e5e7eb; border-radius: 8px; background: #fff; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);">
-                <h2 style="font-size: 1.5rem; margin-bottom: 0.5rem;">
-                    <a href="{% url 'article_detail' article.slug %}" style="color: #2563eb; text-decoration: none;">{{ article.title }}</a>
-                </h2>
-                <p style="color: #4b5563; line-height: 1.5;">{{ article.body|truncatewords:40 }}</p>
-                <div style="position: absolute; boottom: 0.75rem; right: 1.5rem; font-size: 0.85rem; color: #6b7280">
-                    {{ article.created_at|date:"d M Y, h:i A" }}
+    <main style="padding: 6vh 8vw;">
+        <h1 style="font-size: 2.2rem; margin-bottom: 1rem; color: #111827">All Blog Articles</h1>
+        <p style="font-size: 1.1rem; color: #4b5563; line-height: 1.6;">
+            Welcome to my Blog! (starting on July 24,2026 when I am 18)
+        </p>
+
+        <div class="articles-list" style="display: flex; flex-direction: column; gap: 1.5rem;">
+            {% for article in articles %}
+                <div class="article-card" style="padding: 1.5rem; position: relative; padding-bottom: 2.5rem; border: 1px solid #e5e7eb; border-radius: 8px; background: #fff; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);">
+                    <h2 style="font-size: 1.5rem; margin-bottom: 0.5rem;">
+                        <a href="{% url 'article_detail' article.slug %}" style="color: #2563eb; text-decoration: none;">{{ article.title }}</a>
+                    </h2>
+                    <p style="color: #4b5563; line-height: 1.5;">{{ article.body|truncatewords:40 }}</p>
+                    <div style="position: absolute; bottom: 0.75rem; right: 1.5rem; font-size: 0.85rem; color: #6b7280">
+                        {{ article.created_at|date:"d M Y, h:i A" }}
+                    </div>
                 </div>
-            </div>
-        {% empty %}
-            <p style="color: #9ca3af;">No articles written yet.</p>
-        {% endfor %}
-    </div>
-</main>
+            {% empty %}
+                <p style="color: #9ca3af;">No articles written yet.</p>
+            {% endfor %}
+        </div>
+    </main>
 
-<div class="bottom-notify-widget" id="footer-notification-zone">
-    {% if not request.user.is_authenticated %}
-        <button class="fluid-btn" style="background: #1f2937; color: white;"
-                hx-get="{% url 'htmx_signup_form' %}" hx-target="#modal-dynamic-content"
-                onclick="document.getElementById('main-auth-modal').style.display='flex';">
-            Get notified for new blog posts
-        </button>
-    {% else %}
-        {% if request.user.profile.get_notified %}
-            <span class="subscribed-text">You stay notified about new posts via email</span>
-        {% else %}
+    <div class="bottom-notify-widget" id="footer-notification-zone">
+        {% if not request.user.is_authenticated %}
             <button class="fluid-btn" style="background: #1f2937; color: white;"
-                    hx-post="{% url 'subscribe_notify' %}" hx-target="#footer-notification-zone" hx-swap="outerHTML">
-                Get notified for new posts
+                    hx-get="{% url 'htmx_signup_form' %}" hx-target="#modal-dynamic-content"
+                    onclick="document.getElementById('main-auth-modal').style.display='flex';">
+                Get notified for new blog posts
             </button>
+        {% else %}
+            {% if request.user.profile.get_notified %}
+                <span class="subscribed-text">You stay notified about new posts via email</span>
+            {% else %}
+                <button class="fluid-btn" style="background: #1f2937; color: white;"
+                        hx-post="{% url 'subscribe_notify' %}" hx-target="#footer-notification-zone" hx-swap="outerHTML">
+                    Get notified for new posts
+                </button>
+            {% endif %}
         {% endif %}
-    {% endif %}
-</div>
+    </div>
+
+</body>
 
 {% endblock %}

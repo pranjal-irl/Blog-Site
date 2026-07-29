@@ -8,6 +8,11 @@ html{
     }
 }
 
+body{
+    margin-left: 15vw;
+    margin-right: 15vw;
+}
+
 .modal-overlay{
     position: fixed;
     top: 0;
@@ -23,8 +28,8 @@ html{
 
 .modal-box{
     background: #ffffff;
-    width: 80vw;
-    max-width: 30rem;
+    width: 60vw;
+    max-width: 25rem;
     padding: 2rem;
     border-radius: 0.5rem;
     box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.2);
@@ -82,11 +87,11 @@ html{
 }
 
 .subscribed-text{
-    color: #059669;
-    font-weight: bold;
-    font-size: 0.95rem;
+    color: #99985e;
+    font-weight: light;
+    font-size: 0.7rem;
     background: #ecfdf5;
-    padding: 0.6rem 1.2rem;
-    border-radius: 2rem;
+    padding: 0.4rem 1rem;
+    border-radius: 1.5rem;
     border: 0.05rem solid #a7f3d0;
 }
