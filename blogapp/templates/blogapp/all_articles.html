@@ -13,7 +13,7 @@
         <div class="articles-list" style="display: flex; flex-direction: column; gap: 1.5rem;">
             {% for article in articles %}
                 <div class="article-card" style="padding: 1.2rem; position: relative; padding-bottom: 2.2rem; border: 0.05rem solid #e5e7eb; border-radius: 0.4rem; background: #fff; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);">
-                    <h2 style="font-size: 1rem; margin-bottom: 0.3rem;">
+                    <h2 style="font-size: 1.1rem; margin-bottom: 0.3rem;">
                         <a href="{% url 'article_detail' article.slug %}" style="color: rgb(233, 138, 75); text-decoration: none;">{{ article.title }}</a>
                     </h2>
                     <p style="color: #4b5563; line-height: 1.5;">{{ article.body|truncatewords:40 }}</p>
