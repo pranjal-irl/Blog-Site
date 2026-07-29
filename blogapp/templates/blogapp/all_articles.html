@@ -12,9 +12,9 @@
 
         <div class="articles-list" style="display: flex; flex-direction: column; gap: 1.5rem;">
             {% for article in articles %}
-                <div class="article-card" style="padding: 1.5rem; position: relative; padding-bottom: 2.5rem; border: 1px solid #e5e7eb; border-radius: 8px; background: #fff; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);">
-                    <h2 style="font-size: 1.5rem; margin-bottom: 0.5rem;">
-                        <a href="{% url 'article_detail' article.slug %}" style="color: #2563eb; text-decoration: none;">{{ article.title }}</a>
+                <div class="article-card" style="padding: 1.2rem; position: relative; padding-bottom: 2.2rem; border: 0.05rem solid #e5e7eb; border-radius: 0.4rem; background: #fff; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);">
+                    <h2 style="font-size: 1rem; margin-bottom: 0.3rem;">
+                        <a href="{% url 'article_detail' article.slug %}" style="color: rgb(233, 138, 75); text-decoration: none;">{{ article.title }}</a>
                     </h2>
                     <p style="color: #4b5563; line-height: 1.5;">{{ article.body|truncatewords:40 }}</p>
                     <div style="position: absolute; bottom: 0.75rem; right: 1.5rem; font-size: 0.85rem; color: #6b7280">
@@ -44,6 +44,10 @@
                 </button>
             {% endif %}
         {% endif %}
+    </div>
+
+    <div class="contact" style="background-color: #333; color: white; padding: 0.1rem;">
+
     </div>
 
 </body>
