@@ -7,7 +7,7 @@
 
         {% if not request.user.is_authenticated %}
         <div class="top-guest-nudge">
-            <span style="color: #c1b468; font-size: 0.9rem;">Wanna change your past comments or likes?-</span>
+            <span style="color: #dba354; font-size: 0.9rem;">Wanna change your past comments or likes?-</span>
             <a href="#" style="color: #2563eb; font-size: 0.9rem; text-decoration: none;"
             hx-get="{% url 'htmx_login_form' %}" hx-target="#modal-dynamic-content"
             onclick="document.getElementById('main-auth-modal').style.display='flex'; return false;"> Login</a>
