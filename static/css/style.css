@@ -9,8 +9,26 @@ html{
 }
 
 body{
-    margin-left: 15vw;
-    margin-right: 15vw;
+    margin-left: 12vw;
+    margin-right: 12vw;
+}
+
+h1, h2, h3, label{
+  font-family: "Noto Sans", sans-serif !important;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+  font-variation-settings:
+    "wdth" 100;
+}
+
+p, a{
+    font-family: "Noto Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 200;
+    font-style: normal;
+    font-variation-settings:
+    "wdth" 100;
 }
 
 .modal-overlay{
@@ -67,6 +85,8 @@ body{
     top: 3vh;
     right: 3vh;
     font-size: 0.9rem;
+    background: transparent;
+    border: none;
 }
 
 .bottom-notify-widget{
