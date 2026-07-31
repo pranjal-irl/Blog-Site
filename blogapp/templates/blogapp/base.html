@@ -12,13 +12,13 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
     <script src="https://unpkg.com/htmx.org@1.9.10"></script>
 </head>
-<body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' style="margin: 0; padding: 0; font-family: sans-serif; min-height: 100vh; background-color: #f9fafb; position: relative;">
+<body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' style="margin: 0; padding: 0; min-height: 100vh; background-color: #f9fafb; position: relative;">
 
     {% block content %}
     {% endblock %}

@@ -1,19 +1,5 @@
 {% extends 'blogapp/base.html' %}
 
-<head>
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    
-</head>
-
 <body>
 
 {% block content %}
@@ -51,7 +37,5 @@
         <br>
         <a href="{% url 'home' %}" style="font-size: 0.9rem; color: #dba354; text-decoration: none;">← Back to Home</a>
     </div>
-
-</body>
 
 {% endblock %}
