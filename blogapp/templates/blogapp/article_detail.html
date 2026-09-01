@@ -1,16 +1,14 @@
 {% extends 'blogapp/base.html' %}
 
-<body>
-
-{% block content %}
+    {% block content %}
     <div style="padding: 4vh 8vw;">
 
         {% if not request.user.is_authenticated %}
         <div class="top-guest-nudge">
-            <span style="color: #dba354; font-size: 0.9rem;">Wanna change your past comments or likes?-</span>
-            <a href="#" style="color: #2563eb; font-size: 0.9rem; text-decoration: none;"
+            <span>Wanna change your past comments or likes?</span>
+            <a href="#" style="color: #2563eb; font-weight: bold; text-decoration: none;"
             hx-get="{% url 'htmx_login_form' %}" hx-target="#modal-dynamic-content"
-            onclick="document.getElementById('main-auth-modal').style.display='flex'; return false;"> Login</a>
+            onclick="document.getElementById('main-auth-modal').style.display='flex'; return false;">Login</a>
         </div>
         {% endif %}
 
@@ -18,7 +16,7 @@
         <h1>{{ article.title }}</h1>
         <p>Published: {{ article.created_at }}</p>
 
-        <div style="margin-top: 20px; margin-bottom: 30px; font-size: 1.1em; line-height: 1.6">
+        <div class="article-content">
             {{ article.content|linebreaks }}
         </div>
 
@@ -35,7 +33,6 @@
         </div>
 
         <br>
-        <a href="{% url 'home' %}" style="font-size: 0.9rem; color: #dba354; text-decoration: none;">← Back to Home</a>
+        <a href="{% url 'home' %}">← Back to Home</a>
     </div>
-
 {% endblock %}
