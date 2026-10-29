@@ -28,8 +28,7 @@ env=environ.Env(); environ.Env.read_env(BASE_DIR / '.env')
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-n(@w1=xt(ngsj+lzssb@=5q%l6o4=1*3e&u+tqa%up$+(pg^_)'
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get("DEBUG", "False" if os.environ.get("VERCEL") else "True") == "True"
 
 ALLOWED_HOSTS = [
     "blog-site-whog.onrender.com",
