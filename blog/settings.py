@@ -25,8 +25,7 @@ env=environ.Env(); environ.Env.read_env(BASE_DIR / '.env')
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-n(@w1=xt(ngsj+lzssb@=5q%l6o4=1*3e&u+tqa%up$+(pg^_)'
+SECRET_KEY = env("SECRET_KEY")
 
 DEBUG = os.environ.get("DEBUG", "False" if os.environ.get("VERCEL") else "True") == "True"
 
